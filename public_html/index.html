@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de-CH">
+    <head>
+        <title>Pfadi Orion</title>
+        <meta charset="utf-8" />
+
+        <!-- <meta name="viewport" content="width=device-with, initial-scale=1.0" /> -->
+
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="js/jquery.animate-enhanced.min.js"></script>
+        <script src="js/jquery.localscroll-1.2.7-min.js"></script>
+        <script src="js/jquery.scrollTo.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                var winHeight = $(window).height();
+                console.log($(window).height());
+                $('.article-top').css("height", winHeight + "px");
+                //$('.article').css("height", winHeight * 0.65 + "px");
+                //$('.scroller-main').css("height", winHeight * 0.75 + "px");
+            
+                $('.scroll-start').click(function(){
+                    $.scrollTo('78%', 2000, {easing: 'easeOutBounce'});
+                });
+            });
+
+            $(window).scroll(function() {
+                scrollTop = $(window).scrollTop();
+                
+                if(($(window).height() + scrollTop) >= $(window).height() && ($(window).height() + scrollTop) <= ($(window).height()*2 + 500)){
+                //console.log("window: " + $(window).height());
+                //console.log("document: " + $(document).height());
+                //console.log("scrollTop: " + scrollTop);
+                    parallax = ($(window).height() - scrollTop);
+                    $('#cnt1').css({
+                        '-webkit-transform': 'translate3d(0px, ' + parallax + 'px, 0px)',
+                        'height': '500px',
+                        'visibility': 'visible'
+                    });
+                    $('#img1').css({
+                        '-webkit-transform': 'translate3d(0px, ' + (-(parallax + 500) * 0.75) + 'px, 0px)',
+                    });
+                }
+                else{
+                    $('#cnt1').css({
+                        '-webkit-transform': 'none',
+                        'visibility': 'hidden',
+                        'height': 0
+                    });
+                }
+                
+                if(($(window).height() + scrollTop) >= ($(window).height() + 1000) && ($(window).height() + scrollTop) <= (1500 + $(window).height()*2)){
+                    parallax = (($(window).height() + 1000) - scrollTop);
+                    $('#cnt2').css({
+                        '-webkit-transform': 'translate3d(0px, ' + parallax + 'px, 0px)',
+                        'height': '500px',
+                        'visibility': 'visible'
+                    });
+                    $('#img2').css({
+                        '-webkit-transform': 'translate3d(0px, ' + (-(parallax + 500) * 0.75) + 'px, 0px)',
+                    });
+                }
+                else{
+                    $('#cnt2').css({
+                        '-webkit-transform': 'none',
+                        'visibility': 'hidden',
+                        'height': 0
+                    });
+                }
+            });
+            
+            $(window).resize(function(){
+                //winHeight = $(window).height();
+                //console.log(winHeight);
+                //$('.article').css("height", winHeight * 0.65 + "px");
+                //$('.scroller-main').css("height", winHeight * 0.8 + "px");
+            });
+        </script>
+    </head>
+
+    <body class="body"> 
+        <header>
+            <h1>Pfadi Orion</h1>
+        </header> 
+        <div class="parallax-parent">
+            <div class="parallax-container" id="cnt1">
+                <div class="parallax-image" id="img1" style="background-image: url('img/google-now-parallax-2400.jpg');"></div>
+            </div>
+            <div class="parallax-container" id="cnt2">
+                <div class="parallax-image" id="img2" style="background-image: url('img/gallery-parallax-2400.jpg');"></div>
+            </div>
+        </div>
+        <div id="content-main">
+            <section class="article-top">
+                <h2>let's scroll<br />|<br /><span class="scroll-start" style="cursor: pointer;">V</span></h2>
+            </section>
+            <section class="parallax" id="1"></section>
+            <section class="article"></section>
+            <section class="parallax" id="2"></section>
+            <section class="article"></section>
+        </div>
+        <footer></footer>  
+    </body>
+</html>
