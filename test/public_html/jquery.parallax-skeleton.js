@@ -13,22 +13,25 @@
  
         // Default options
         var settings = $.extend({
-            parallax: 0.75,
-            image1url: "img/google-now-parallax-2400.jpg",
-            image2url: "img/gallery-parallax-2400.jpg"
+            containerHeigth: 500,
+            parallax: 0.75
         }, options );
         
-        return this.find('[data-parallax="rand"]').each(function (){
-            var $pxCnt = document.createElement("div");
-            $pxCnt.setAttribute("class", "parallax-container");
-            $pxCnt.setAttribute("style", "visibility: hidden; heigth: 0;");
+        var $parallaxParent = document.createElement("div");
+        $parallaxParent.setAttribute("class", "parallax-parent");
+        $('body').append($parallaxParent);
             
-            var $pxImg = document.createElement("div");
-            $pxImg.setAttribute("class", "parallax-image");
-            $pxImg.setAttribute("style", "background-image: url('" + settings.image1url + "');");
+        return this.find('[data-parallax="true"]').each(function (index, obj){
+            var $parallaxContainer = document.createElement("div");
+            $parallaxContainer.setAttribute("class", "parallax-container");
+            $parallaxContainer.setAttribute("style", "visibility: hidden; heigth: 0;");
             
-            $pxCnt.appendChild($pxImg);
-            $('.parallax-parent').append($pxCnt);
+            var $parallaxImage = document.createElement("div");
+            $parallaxImage.setAttribute("class", "parallax-image");
+            $parallaxImage.setAttribute("style", "background-image: url('" + $(obj).attr('data-image') + "'); background-position-y: -40%");
+            
+            $parallaxContainer.appendChild($parallaxImage);
+            $parallaxParent.appendChild($parallaxContainer);
         });
     };
     
@@ -36,45 +39,48 @@
         scrollTop = $(window).scrollTop();
         winHeigth = $(window).height();
         
-        //console.log("scrolltop: " + scrollTop);
-        //console.log("win heigth: " + winHeigth);
-        //console.log("win heigth + scrolltop: " + (winHeigth + scrollTop));
-        
-        /*$(".parallax-container").each(function(){
-            var el = $(this);
+        $(".parallax").each(function(index, obj){
+            var el = $(obj);
             var offset = el.offset();
-            console.log(offset.top);
-        });*/
-        
-        $(".parallax").each(function(index){
-            var el = $(this);
-            var offset = el.offset();
-            if((winHeigth + scrollTop) >= el.offset()){
-                console.log($(".parallax-container").get(index));
+            parallax = (offset.top - scrollTop);
+            
+            var cont = new Array();
+            
+            cont[index] = $(".parallax-container").get(index);
+            $(cont[index]).css({
+                visibility: 'hidden',
+                height: '0',
+                '-webkit-transform': 'none'
+            });
+            if((winHeigth + scrollTop) >= offset.top){
+                $(cont[index]).css({
+                    visibility: 'visible',
+                    height: '500px',
+                    'transform': 'translate3d(0px, ' + parallax + 'px, 0px)',
+                    '-webkit-transform': 'translate3d(0px, ' + parallax + 'px, 0px)'
+                });
+                
+                $(cont[index]).children().first().css({
+                    visibility: 'visible',
+                    'transform': 'translate3d(0px, ' + (-(parallax) * 0.75) + 'px, 0px)',
+                    '-webkit-transform': 'translate3d(0px, ' + (-(parallax) * 0.75) + 'px, 0px)'
+                });
             }
-            //console.log("elem pos: " + offset.top);
+            
+            if((scrollTop - offset.top) >= 500){
+                $(cont[index]).css({
+                    visibility: 'hidden',
+                    height: '0',
+                    'transform': 'none',
+                    '-webkit-transform': 'none'
+                });                
+                $(cont[index]).children().first().css({
+                    visibility: 'hidden',
+                    'transform': 'none',
+                    '-webkit-transform': 'none'
+                });
+            }
         });
-        
-
-       /* if(($(window).height() + scrollTop) >= $(window).height() && ($(window).height() + scrollTop) <= ($(window).height()*2 + 500)){
-        //console.log("window: " + $(window).height());
-            parallax = ($(window).height() - scrollTop);
-            $('#cnt1').css({
-                '-webkit-transform': 'translate3d(0px, ' + parallax + 'px, 0px)',
-                'height': '500px',
-                'visibility': 'visible'
-            });
-            $('#img1').css({
-                '-webkit-transform': 'translate3d(0px, ' + (-(parallax + 500) * 0.75) + 'px, 0px)',
-            });
-        }
-        else{
-            $('#cnt1').css({
-                '-webkit-transform': 'none',
-                'visibility': 'hidden',
-                'height': 0
-            });
-        }*/
     });
  
 }( jQuery ));

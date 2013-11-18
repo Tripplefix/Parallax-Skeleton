@@ -17,69 +17,16 @@
             $(document).ready(function(){
                 $('#content-main').parallax();
             });
-            /*$(document).ready(function() {
-                var winHeight = $(window).height();
-                console.log($(window).height());
-                $('.article-top').css("height", winHeight + "px");
-                //$('.article').css("height", winHeight * 0.65 + "px");
-                //$('.scroller-main').css("height", winHeight * 0.75 + "px");
             
+            $(document).ready(function() {
                 $('.scroll-start').click(function(){
                     $.scrollTo('78%', 2000, {easing: 'easeOutBounce'});
                 });
             });
-
-            $(window).scroll(function() {
-                scrollTop = $(window).scrollTop();
-                
-                if(($(window).height() + scrollTop) >= $(window).height() && ($(window).height() + scrollTop) <= ($(window).height()*2 + 500)){
-                //console.log("window: " + $(window).height());
-                //console.log("document: " + $(document).height());
-                //console.log("scrollTop: " + scrollTop);
-                    parallax = ($(window).height() - scrollTop);
-                    $('#cnt1').css({
-                        '-webkit-transform': 'translate3d(0px, ' + parallax + 'px, 0px)',
-                        'height': '500px',
-                        'visibility': 'visible'
-                    });
-                    $('#img1').css({
-                        '-webkit-transform': 'translate3d(0px, ' + (-(parallax + 500) * 0.75) + 'px, 0px)',
-                    });
-                }
-                else{
-                    $('#cnt1').css({
-                        '-webkit-transform': 'none',
-                        'visibility': 'hidden',
-                        'height': 0
-                    });
-                }
-                
-                if(($(window).height() + scrollTop) >= ($(window).height() + 1000) && ($(window).height() + scrollTop) <= (1500 + $(window).height()*2)){
-                    parallax = (($(window).height() + 1000) - scrollTop);
-                    $('#cnt2').css({
-                        '-webkit-transform': 'translate3d(0px, ' + parallax + 'px, 0px)',
-                        'height': '500px',
-                        'visibility': 'visible'
-                    });
-                    $('#img2').css({
-                        '-webkit-transform': 'translate3d(0px, ' + (-(parallax + 500) * 0.75) + 'px, 0px)',
-                    });
-                }
-                else{
-                    $('#cnt2').css({
-                        '-webkit-transform': 'none',
-                        'visibility': 'hidden',
-                        'height': 0
-                    });
-                }
-            });
             
             $(window).resize(function(){
-                //winHeight = $(window).height();
-                //console.log(winHeight);
-                //$('.article').css("height", winHeight * 0.65 + "px");
-                //$('.scroller-main').css("height", winHeight * 0.8 + "px");
-            });*/
+                
+            });
         </script>
     </head>
 
@@ -87,19 +34,19 @@
        <!-- <header>
             <h1>Pfadi Orion</h1>
         </header> -->
-        <div class="parallax-parent">
-        </div>
         <div id="content-main">
             <section class="article-top">
                 <h2>let's scroll<br />|<br /><span class="scroll-start" style="cursor: pointer;">V</span></h2>
             </section>
-            <section class="parallax" data-parallax="rand"></section>
+            <section class="parallax" data-parallax="true" data-image="img/gallery/096.JPG"></section>
             <section class="article"></section>
-            <section class="parallax" data-parallax="rand"></section>
+            <section class="parallax" data-parallax="true" data-image="img/gallery/072.JPG"></section>
             <section class="article"></section>
-            <section class="parallax" data-parallax="rand"></section>
+            <section class="parallax" data-parallax="true" data-image="img/gallery/082.JPG"></section>
             <section class="article"></section>
-            <section class="parallax" data-parallax="rand"></section>
+            <section class="parallax" data-parallax="true" data-image="img/gallery/083.JPG"></section>
+            <section class="article"></section>
+            <section class="parallax" data-parallax="true" data-image="img/gallery/098.JPG"></section>
             <section class="article"></section>
         </div>
         <footer></footer>  
