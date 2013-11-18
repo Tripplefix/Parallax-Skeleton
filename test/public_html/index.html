@@ -11,8 +11,13 @@
         <script src="js/jquery.animate-enhanced.min.js"></script>
         <script src="js/jquery.localscroll-1.2.7-min.js"></script>
         <script src="js/jquery.scrollTo.min.js"></script>
+        <script src="jquery.parallax-skeleton.js"></script>
+        
         <script>
-            $(document).ready(function() {
+            $(document).ready(function(){
+                $('#content-main').parallax();
+            });
+            /*$(document).ready(function() {
                 var winHeight = $(window).height();
                 console.log($(window).height());
                 $('.article-top').css("height", winHeight + "px");
@@ -74,29 +79,27 @@
                 //console.log(winHeight);
                 //$('.article').css("height", winHeight * 0.65 + "px");
                 //$('.scroller-main').css("height", winHeight * 0.8 + "px");
-            });
+            });*/
         </script>
     </head>
 
     <body class="body"> 
-        <header>
+       <!-- <header>
             <h1>Pfadi Orion</h1>
-        </header> 
+        </header> -->
         <div class="parallax-parent">
-            <div class="parallax-container" id="cnt1">
-                <div class="parallax-image" id="img1" style="background-image: url('img/google-now-parallax-2400.jpg');"></div>
-            </div>
-            <div class="parallax-container" id="cnt2">
-                <div class="parallax-image" id="img2" style="background-image: url('img/gallery-parallax-2400.jpg');"></div>
-            </div>
         </div>
         <div id="content-main">
             <section class="article-top">
                 <h2>let's scroll<br />|<br /><span class="scroll-start" style="cursor: pointer;">V</span></h2>
             </section>
-            <section class="parallax" id="1"></section>
+            <section class="parallax" data-parallax="rand"></section>
             <section class="article"></section>
-            <section class="parallax" id="2"></section>
+            <section class="parallax" data-parallax="rand"></section>
+            <section class="article"></section>
+            <section class="parallax" data-parallax="rand"></section>
+            <section class="article"></section>
+            <section class="parallax" data-parallax="rand"></section>
             <section class="article"></section>
         </div>
         <footer></footer>  
