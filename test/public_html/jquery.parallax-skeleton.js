@@ -13,31 +13,49 @@
  
         // Default options
         var settings = $.extend({
-            containerHeigth: 500,
+            containerHeight: 500,
             parallax: 0.75
         }, options );
         
-        var $parallaxParent = document.createElement("div");
-        $parallaxParent.setAttribute("class", "parallax-parent");
-        $('body').append($parallaxParent);
+        var parallaxParent = document.createElement("div");
+        $(parallaxParent).addClass("parallax-parent");
+        $('.wrapper').prepend($(parallaxParent));
             
-        return this.find('[data-parallax="true"]').each(function (index, obj){
-            var $parallaxContainer = document.createElement("div");
-            $parallaxContainer.setAttribute("class", "parallax-container");
-            $parallaxContainer.setAttribute("style", "visibility: hidden; heigth: 0;");
+        return $(".parallax").each(function (index, obj){
+            var parallaxContainer = document.createElement("div");
+            $(parallaxContainer).addClass("parallax-container");
+            $(parallaxContainer).css({
+                visibility: 'hidden',
+                height: 0
+            });
             
-            var $parallaxImage = document.createElement("div");
-            $parallaxImage.setAttribute("class", "parallax-image");
-            $parallaxImage.setAttribute("style", "background-image: url('" + $(obj).attr('data-image') + "'); background-position-y: -40%");
-            
-            $parallaxContainer.appendChild($parallaxImage);
-            $parallaxParent.appendChild($parallaxContainer);
+            var parallaxImage = document.createElement("div");
+            $(parallaxImage).addClass("parallax-image");
+            $(parallaxImage).css({
+                    backgroundImage: "url('" + $(obj).attr('data-image') + "')", 
+                    backgroundPositionY: "-30%"
+                });
+                
+            $(parallaxContainer).append($(parallaxImage));
+            $(parallaxParent).append($(parallaxContainer));
         });
+        
+        /*$("parallax-container").css({
+                visibility: 'hidden',
+                height: 0
+            });
+            
+        $(".parallax-image").each(function(index, obj){            
+            $(obj).css({
+                backgroundImage: "url('" + $(".parallax").get(index).attr('data-image') + "')",
+                backgroundPositionY: '-40%'
+            });
+        });*/
     };
     
     $(window).scroll(function(){
         scrollTop = $(window).scrollTop();
-        winHeigth = $(window).height();
+        winHeight = $(window).height();
         
         $(".parallax").each(function(index, obj){
             var el = $(obj);
@@ -50,24 +68,25 @@
             $(cont[index]).css({
                 visibility: 'hidden',
                 height: '0',
+                'transform': 'none',
                 '-webkit-transform': 'none'
             });
-            if((winHeigth + scrollTop) >= offset.top){
+            if((winHeight + scrollTop) >= offset.top){
                 $(cont[index]).css({
                     visibility: 'visible',
-                    height: '500px',
+                    height: '700px',
                     'transform': 'translate3d(0px, ' + parallax + 'px, 0px)',
                     '-webkit-transform': 'translate3d(0px, ' + parallax + 'px, 0px)'
                 });
                 
                 $(cont[index]).children().first().css({
                     visibility: 'visible',
-                    'transform': 'translate3d(0px, ' + (-(parallax) * 0.75) + 'px, 0px)',
-                    '-webkit-transform': 'translate3d(0px, ' + (-(parallax) * 0.75) + 'px, 0px)'
+                    'transform': 'translate3d(0px, ' + (-(parallax) * 0.8) + 'px, 0px)',
+                    '-webkit-transform': 'translate3d(0px, ' + (-(parallax) * 0.8) + 'px, 0px)'
                 });
             }
             
-            if((scrollTop - offset.top) >= 500){
+            if((scrollTop - offset.top) >= 700){
                 $(cont[index]).css({
                     visibility: 'hidden',
                     height: '0',

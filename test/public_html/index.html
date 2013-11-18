@@ -1,11 +1,8 @@
 <!DOCTYPE html>
 <html lang="de-CH">
     <head>
-        <title>Pfadi Orion</title>
+        <title>parallax-skeleton</title>
         <meta charset="utf-8" />
-
-        <!-- <meta name="viewport" content="width=device-with, initial-scale=1.0" /> -->
-
         <link rel="stylesheet" type="text/css" href="css/style.css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="js/jquery.animate-enhanced.min.js"></script>
@@ -13,42 +10,52 @@
         <script src="js/jquery.scrollTo.min.js"></script>
         <script src="jquery.parallax-skeleton.js"></script>
         
-        <script>
-            $(document).ready(function(){
-                $('#content-main').parallax();
-            });
-            
+        <script>            
             $(document).ready(function() {
-                $('.scroll-start').click(function(){
-                    $.scrollTo('78%', 2000, {easing: 'easeOutBounce'});
-                });
-            });
-            
-            $(window).resize(function(){
                 
+                var winHeight = $(window).height();
+                $('.article-top').css("height", winHeight + "px");
+                
+                $('.scroll-start').click(function(){
+                    $.scrollTo('100%', 5000, {easing: 'easeOutBounce'});
+                });
             });
         </script>
     </head>
 
     <body class="body"> 
-       <!-- <header>
-            <h1>Pfadi Orion</h1>
-        </header> -->
-        <div id="content-main">
-            <section class="article-top">
-                <h2>let's scroll<br />|<br /><span class="scroll-start" style="cursor: pointer;">V</span></h2>
-            </section>
-            <section class="parallax" data-parallax="true" data-image="img/gallery/096.JPG"></section>
-            <section class="article"></section>
-            <section class="parallax" data-parallax="true" data-image="img/gallery/072.JPG"></section>
-            <section class="article"></section>
-            <section class="parallax" data-parallax="true" data-image="img/gallery/082.JPG"></section>
-            <section class="article"></section>
-            <section class="parallax" data-parallax="true" data-image="img/gallery/083.JPG"></section>
-            <section class="article"></section>
-            <section class="parallax" data-parallax="true" data-image="img/gallery/098.JPG"></section>
-            <section class="article"></section>
+       <header>
+            <h1>Test area</h1>
+        </header>
+        <div class="wrapper">
+            <div id="content-main">
+                <section class="article-top">
+                    <h2>let's scroll<br />|<br /><span class="scroll-start" style="cursor: pointer;">V</span></h2>
+                </section>
+                <section class="parallax" data-image="img/gallery/001.JPG"></section>
+                <section class="article">
+                    <!-- your content goes here -->
+                </section>
+                <section class="parallax" data-image="img/gallery/071.JPG"></section>
+                <section class="article">
+                    <!-- your content goes here -->
+                </section>
+                <section class="parallax" data-image="img/gallery/017.JPG"></section>
+                <section class="article">
+                    <!-- your content goes here -->
+                </section>
+                <section class="parallax" data-image="img/gallery/003.JPG"></section>
+                <section class="article">
+                    <!-- your content goes here -->
+                </section>
+                <section class="parallax" data-image="img/gallery/059.JPG"></section>
+                <section class="article">
+                    <!-- your content goes here -->
+                </section>
+            </div>
         </div>
-        <footer></footer>  
+        <script>
+            $('#content-main').parallax();
+        </script>
     </body>
 </html>

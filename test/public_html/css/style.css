@@ -109,7 +109,6 @@ margin: 10px 60px;
 
 .article-top{
     width: 100%;
-    height: 1000px;
     background-color: #FFF;
     z-index: 2;
 }
@@ -132,6 +131,6 @@ margin: 10px 60px;
 }
 
 .parallax{
-    height: 500px;
+    height: 700px;
     width: 100%;
 }
