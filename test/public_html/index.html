@@ -4,6 +4,7 @@
         <title>parallax-skeleton</title>
         <meta charset="utf-8" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
+        <link rel="stylesheet" type="text/css" href="parallax-skeleton.css" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="js/jquery.animate-enhanced.min.js"></script>
         <script src="js/jquery.localscroll-1.2.7-min.js"></script>
@@ -11,15 +12,17 @@
         <script src="jquery.parallax-skeleton.js"></script>
         
         <script>            
-            $(document).ready(function() {
-                
-                var winHeight = $(window).height();
-                $('.article-top').css("height", winHeight + "px");
-                
+            $(document).ready(function(){
+                setTopArticle();                
                 $('.scroll-start').click(function(){
-                    $.scrollTo('100%', 5000, {easing: 'easeOutBounce'});
-                });
-            });
+                    $.scrollTo('100%', 8000, {easing: 'easeOutBounce'});
+                });                    
+            });            
+            $(window).resize(setTopArticle);
+            
+            function setTopArticle(){
+                $('.article-top').css("height", $(window).height() + "px");
+            }
         </script>
     </head>
 
@@ -27,35 +30,40 @@
        <header>
             <h1>Test area</h1>
         </header>
-        <div class="wrapper">
             <div id="content-main">
                 <section class="article-top">
                     <h2>let's scroll<br />|<br /><span class="scroll-start" style="cursor: pointer;">V</span></h2>
                 </section>
-                <section class="parallax" data-image="img/gallery/001.JPG"></section>
+                <section class="parallax" data-image="img/gallery/001.JPG" data-with="1600" data-height="1200"></section>
                 <section class="article">
                     <!-- your content goes here -->
                 </section>
-                <section class="parallax" data-image="img/gallery/071.JPG"></section>
+                <section class="parallax" data-image="img/gallery/071.JPG" data-with="1600" data-height="1000"></section>
                 <section class="article">
                     <!-- your content goes here -->
                 </section>
-                <section class="parallax" data-image="img/gallery/017.JPG"></section>
+                <section class="parallax" data-image="img/gallery/005.JPG" data-with="1600" data-height="1000"></section>
                 <section class="article">
                     <!-- your content goes here -->
                 </section>
-                <section class="parallax" data-image="img/gallery/003.JPG"></section>
+                <section class="parallax" data-image="img/gallery/017.JPG" data-with="1600" data-height="1000"></section>
                 <section class="article">
                     <!-- your content goes here -->
                 </section>
-                <section class="parallax" data-image="img/gallery/059.JPG"></section>
+                <section class="parallax" data-image="img/gallery/003.JPG" data-with="1600" data-height="1000"></section>
+                <section class="article">
+                    <!-- your content goes here -->
+                </section>
+                <section class="parallax" data-image="img/gallery/029.JPG" data-with="1600" data-height="1066"></section>
                 <section class="article">
                     <!-- your content goes here -->
                 </section>
             </div>
-        </div>
         <script>
-            $('#content-main').parallax();
+            $('#content-main').parallax({
+                containerHeight: 500,
+                parallax: 0.75
+            });
         </script>
     </body>
 </html>
