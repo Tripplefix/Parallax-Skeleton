@@ -34,6 +34,8 @@
         $('body').prepend($(parallaxParent));
 
         $(".parallax").each(function(index, obj) {
+            _imgTransX[index] = 0;
+            _imgTransY[index] = 0;
             var winWith = parseInt($(window).width());
             var elemWith = parseInt($(obj).attr('data-with'));
             var elemHeight = parseInt($(obj).attr('data-height'));
