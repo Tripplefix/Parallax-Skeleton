@@ -4,6 +4,7 @@
         <title>parallax-skeleton</title>
         <meta charset="utf-8" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <link rel="stylesheet" href="css/style.min.css" />
         <script>
 
             function loadRessources() {       
@@ -11,25 +12,26 @@
                 
                 //js
                 var scroll = _doc.createElement('script'),
+                animateScript = _doc.createElement('script'),
                 parallaxScript = _doc.createElement('script'),
                 //css
-                style = _doc.createElement('link'),
                 parallaxCSS = _doc.createElement('link');    
                 
                 scroll.src = 'js/jquery.scrollTo.min.js';
-                parallaxScript.src = 'jquery.parallax-skeleton.js';
-                style.rel = 'stylesheet';
-                style.href = 'css/style.css';
-                parallaxCSS.rel = 'stylesheet'; 
-                parallaxCSS.href = 'parallax-skeleton.css'; 
+                parallaxScript.src = 'jquery.parallax-skeleton.min.js';
+                animateScript.src = 'js/jquery.animate-enhanced.min.js';
                 
+                parallaxCSS.rel = 'stylesheet'; 
+                parallaxCSS.href = 'parallax-skeleton.min.css'; 
+                
+                _doc.head.appendChild(animateScript);
                 _doc.head.appendChild(scroll);
                 _doc.head.appendChild(parallaxScript);
-                _doc.head.appendChild(style);
                 _doc.head.appendChild(parallaxCSS);
             }   
 
             $(window).load(function(){
+                $(window).scrollTop(0);
                 $('#content-main').parallax({
                     containerHeight: 500,
                     parallax: 0.75

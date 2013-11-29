@@ -2,9 +2,9 @@
  * jQuery.parallax-skeleton - Parallax-scrolling on a new level
  * Copyright (c) 2013 Rolf Isler & Martin Kubli
  * Licensed under MIT.
- * Date: 18/11/2013
+ * Date: 29/11/2013
  * @author Rolf Isler & Martin Kubli
- * @version 0.1.0
+ * @version 1.1.0
  **/
 
 (function($) {
