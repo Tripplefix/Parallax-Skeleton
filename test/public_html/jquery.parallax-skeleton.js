@@ -1,10 +1,10 @@
 /**
  * jQuery.parallax-skeleton - Parallax-scrolling on a new level
- * Copyright (c) 2013 Rolf Isler & Martin Kubli
+ * Copyright (c) 2014 Rolf Isler
  * Licensed under MIT.
- * Date: 29/11/2013
- * @author Rolf Isler & Martin Kubli
- * @version 1.1.0
+ * Date: 24.01.2014
+ * @author Rolf Isler
+ * @version 1.2.0
  **/
 
 (function($) {
@@ -14,19 +14,13 @@
         // Default options
         var settings = $.extend({
             placeHolderName: '.parallax',
-            containerHeight: 700,
             parallax: 0.75
         }, options);
-
-        //set placeholder properties
-        $(settings.placeHolderName).css({
-            height: settings.containerHeight,
-            width: '100%'
-        });
 
         //image settings
         var _imgTransX = new Array(),
         _imgTransY = new Array(),
+        _imgPosY = 0,
         _window = $(window),
         _doc = document,
         _parallax = $(".parallax"),
@@ -38,13 +32,24 @@
         parallaxParent.addClass("parallax-parent");
         _body.prepend(parallaxParent);
 
-        _parallax.each(function(index, obj) {
-            _imgTransX[index] = 0;
-            _imgTransY[index] = 0;
+        _parallax.each(function(index, obj) {            
             var elem = $(obj),
             elemHeight = parseInt(elem.data("height")),
             elemWith = parseInt(elem.data("with")),
-            elemImage = elem.data("image");
+            elemImage = elem.data("image"),
+            elemOffset = elem.offset().top,
+            containerHeight = elem.data("container-height"),
+            elemContent = elem.data("content");
+            
+            _imgTransX[index] = 0;
+            _imgTransY[index] = -elem.data("posy");            
+            _imgPosY = elem.data("posy");
+
+            //set placeholder properties
+            $(settings.placeHolderName).css({
+                height: containerHeight,
+                width: '100%'
+            }); 
 
             if (_winWith >= elemWith) {
                 _imgTransX[index] = 0;
@@ -58,9 +63,10 @@
             var parallaxContainer = $(_doc.createElement("div"));
             parallaxContainer.addClass("parallax-container");
             parallaxContainer.css({
-                visibility: 'hidden',
-                'transform': 'translate3d(0px, 0px, 0px)',
-                '-webkit-transform': 'translate3d(0px, 0px, 0px)'
+                visibility: 'visible',
+                height: containerHeight,
+                'transform': 'translate3d(0px, ' + elemOffset + 'px, 0px)',
+                '-webkit-transform': 'translate3d(0px, ' + elemOffset + 'px, 0px)'
             });
 
             //create a image-container for each parallax-container
@@ -70,12 +76,30 @@
                 backgroundImage: "url('" + elemImage + "')",
                 width: elemWith,
                 height: elemHeight,
-                'transform': 'translate3d(' + _imgTransX[index] + 'px, 0px, 0px)',
-                '-webkit-transform': 'translate3d(' + _imgTransX[index] + 'px, 0px, 0px)'
+                'transform': 'translate3d(' + _imgTransX[index] + 'px, ' + (-(elemOffset) * settings.parallax - _imgPosY) + 'px, 0px)',
+                '-webkit-transform': 'translate3d(' + _imgTransX[index] + 'px, ' + (-(elemOffset) * settings.parallax - _imgPosY) + 'px, 0px)'
             });
+
+            //create a content-container for each parallax-container
+            if(elemContent !== ""){
+                var parallaxContent = $(_doc.createElement("div"));
+                parallaxContent.addClass("parallax-content");
+                parallaxContent.css({
+                    width: '100%',
+                    height: '100%',
+                    'transform': 'translate3d(0px, 0px, 0px)',
+                    '-webkit-transform': 'translate3d(0px, 0px, 0px)'
+                });
+                
+                var contentText = $(_doc.createElement("h1"));
+                contentText.text(elemContent);
+                
+                parallaxContent.append(contentText);
+            }
 
             //append those container tho its parents
             parallaxContainer.append(parallaxImage);
+            parallaxContainer.append(parallaxContent);
             parallaxParent.append(parallaxContainer);
         });
 
@@ -118,7 +142,6 @@
             //reset all css-properties
             _parallaxContainer.css({
                 visibility: 'hidden',
-                height: 0,
                 'transform': 'translate3d(0px, 0px, 0px)',
                 '-webkit-transform': 'translate3d(0px, 0px, 0px)'
             });
@@ -129,12 +152,13 @@
                 offset = elem.offset().top,
                 position = (offset - scrollTop),
                 visibility = 'visible',
-                cont = $(_parallaxContainer.get(index));
+                cont = $(_parallaxContainer.get(index)),
+                containerHeight = elem.data("container-height");;
 
                 //if container-top(offset.top) reaches the bottom of the window(winHeight + scrollTop) while scrolling ... 1*
                 if ((contTop) >= offset) {
                     //but, if container-bottom(settings.containerHeight) reaches top of the window(scrollTop - offset.top)  while scrolling ... 2*
-                    if ((scrollTop - offset) >= settings.containerHeight) {
+                    if ((scrollTop - offset) >= containerHeight) {
                         // 2* ... hide the container ...
                         position = 0;
                         visibility = 'hidden';
@@ -143,13 +167,12 @@
                     // 1* ... set the container visible and set it to the position of its placeholder ...
                     cont.css({
                         visibility: visibility,
-                        height: settings.containerHeight,
                         'transform': 'translate3d(0px, ' + position + 'px, 0px)',
                         '-webkit-transform': 'translate3d(0px, ' + position + 'px, 0px)'
                     });
 
                     // ... set the parallax-image visible and translate it a bit slower as its container
-                    _imgTransY[index] = (-(position) * settings.parallax);
+                    _imgTransY[index] = (-(position) * settings.parallax - _imgPosY);
                     //translateImage($(cont.children().first()), _imgTransX[index], _imgTransY[index]);
 
                     cont.children().first().css({
@@ -161,13 +184,4 @@
         });
         return this;
     };
-
-    /*function translateImage(obj, x, y){
-     obj.css({                 
-     'transform': 'translate3d(' + x + 'px, ' + y + 'px, 0px)',
-     '-webkit-transform': 'translate3d(' + x + 'px, ' + y + 'px, 0px)'
-     });
-     }*/
-
 }(jQuery));
-

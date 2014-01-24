@@ -7,40 +7,42 @@
         <link rel="stylesheet" href="css/style.min.css" />
         <script>
 
-            function loadRessources() {       
+            function loadRessources() {
                 var _doc = document;
-                
+
                 //js
                 var scroll = _doc.createElement('script'),
-                animateScript = _doc.createElement('script'),
-                parallaxScript = _doc.createElement('script'),
-                //css
-                parallaxCSS = _doc.createElement('link');    
-                
+                        animateScript = _doc.createElement('script'),
+                        parallaxScript = _doc.createElement('script'),
+                        //css
+                        parallaxCSS = _doc.createElement('link');
+
                 scroll.src = 'js/jquery.scrollTo.min.js';
                 parallaxScript.src = 'jquery.parallax-skeleton.min.js';
                 animateScript.src = 'js/jquery.animate-enhanced.min.js';
-                
-                parallaxCSS.rel = 'stylesheet'; 
-                parallaxCSS.href = 'parallax-skeleton.min.css'; 
-                
+
+                parallaxCSS.rel = 'stylesheet';
+                parallaxCSS.href = 'parallax-skeleton.min.css';
+
                 _doc.head.appendChild(animateScript);
                 _doc.head.appendChild(scroll);
                 _doc.head.appendChild(parallaxScript);
                 _doc.head.appendChild(parallaxCSS);
-            }   
+            }
 
-            $(window).load(function(){
+            $(window).load(function() {
                 $(window).scrollTop(0);
-                $('#content-main').parallax({
+                
+                $('body').parallax({
                     containerHeight: 500,
                     parallax: 0.75
                 });
+                
                 $('.scroll-start').click(function() {
                     $.scrollTo('100%', 8000, {easing: 'easeOutBounce'});
                 });
             });
-            
+
             $(document).ready(function() {
                 loadRessources();
                 setTopArticle();
@@ -61,32 +63,30 @@
             <section class="article-top">
                 <h2>let's scroll<br />|<br /><span class="scroll-start" style="cursor: pointer;">V</span></h2>
             </section>
-            <section class="parallax" data-image="img/gallery/001.jpg" data-with="1600" data-height="1200"></section>
+            <section class="parallax" data-image="img/gallery/13H.jpg" data-with="1600" data-height="955"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
-            <section class="parallax" data-image="img/gallery/071.jpg" data-with="1600" data-height="1000"></section>
+            <section class="parallax" data-image="img/gallery/23H.jpg" data-with="1600" data-height="1200"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
-            <section class="parallax" data-image="img/gallery/005.jpg" data-with="1600" data-height="1000"></section>
+            <section class="parallax" data-image="img/gallery/32H.jpg" data-with="1600" data-height="1125"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
-            <section class="parallax" data-image="img/gallery/017.jpg" data-with="1600" data-height="1000"></section>
+            <section class="parallax" data-image="img/gallery/37H.jpg" data-with="1600" data-height="1200"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
-            <section class="parallax" data-image="img/gallery/003.jpg" data-with="1600" data-height="1000"></section>
+            <section class="parallax" data-image="img/gallery/42H.jpg" data-with="1600" data-height="1067"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
-            <section class="parallax" data-image="img/gallery/029.jpg" data-with="1600" data-height="1066"></section>
+            <section class="parallax" data-image="img/gallery/6H.jpg" data-with="1600" data-height="1067"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
         </div>
-        <script>
-        </script>
     </body>
 </html>
