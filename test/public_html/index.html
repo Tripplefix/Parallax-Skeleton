@@ -4,7 +4,7 @@
         <title>parallax-skeleton</title>
         <meta charset="utf-8" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <link rel="stylesheet" href="css/style.min.css" />
+        <link rel="stylesheet" href="css/style.css" />
         <script>
 
             function loadRessources() {
@@ -18,11 +18,11 @@
                         parallaxCSS = _doc.createElement('link');
 
                 scroll.src = 'js/jquery.scrollTo.min.js';
-                parallaxScript.src = 'jquery.parallax-skeleton.min.js';
+                parallaxScript.src = 'jquery.parallax-skeleton.js';
                 animateScript.src = 'js/jquery.animate-enhanced.min.js';
 
                 parallaxCSS.rel = 'stylesheet';
-                parallaxCSS.href = 'parallax-skeleton.min.css';
+                parallaxCSS.href = 'parallax-skeleton.css';
 
                 _doc.head.appendChild(animateScript);
                 _doc.head.appendChild(scroll);
@@ -34,8 +34,7 @@
                 $(window).scrollTop(0);
                 
                 $('body').parallax({
-                    containerHeight: 500,
-                    parallax: 0.75
+                    parallax: 1
                 });
                 
                 $('.scroll-start').click(function() {
@@ -63,27 +62,27 @@
             <section class="article-top">
                 <h2>let's scroll<br />|<br /><span class="scroll-start" style="cursor: pointer;">V</span></h2>
             </section>
-            <section class="parallax" data-image="img/gallery/13H.jpg" data-with="1600" data-height="955"></section>
+            <section class="parallax" data-image="img/gallery/13H.jpg" data-with="1600" data-height="955" data-posy="0" data-container-height="300"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
-            <section class="parallax" data-image="img/gallery/23H.jpg" data-with="1600" data-height="1200"></section>
+            <section class="parallax" data-image="img/gallery/23H.jpg" data-with="1600" data-height="1200" data-posy="0" data-container-height="300"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
-            <section class="parallax" data-image="img/gallery/32H.jpg" data-with="1600" data-height="1125"></section>
+            <section class="parallax" data-image="img/gallery/32H.jpg" data-with="1600" data-height="1125" data-posy="0" data-container-height="300"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
-            <section class="parallax" data-image="img/gallery/37H.jpg" data-with="1600" data-height="1200"></section>
+            <section class="parallax" data-image="img/gallery/37H.jpg" data-with="1600" data-height="1200" data-posy="0" data-container-height="300"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
-            <section class="parallax" data-image="img/gallery/42H.jpg" data-with="1600" data-height="1067"></section>
+            <section class="parallax" data-image="img/gallery/42H.jpg" data-with="1600" data-height="1067" data-posy="0" data-container-height="300"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
-            <section class="parallax" data-image="img/gallery/6H.jpg" data-with="1600" data-height="1067"></section>
+            <section class="parallax" data-image="img/gallery/6H.jpg" data-with="1600" data-height="1067" data-posy="0" data-container-height="300"></section>
             <section class="article">
                 <!-- your content goes here -->
             </section>
