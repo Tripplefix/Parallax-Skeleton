@@ -4,46 +4,22 @@
         <title>parallax-skeleton</title>
         <meta charset="utf-8" />
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+        <script src="parallax-skeleton.js"></script>
+        <script src="js/jquery.scrollTo.min.js"></script>
         <link rel="stylesheet" href="css/style.css" />
+        <link rel="stylesheet" href="parallax-skeleton.css" />
         <script>
 
-            function loadRessources() {
-                var _doc = document;
-
-                //js
-                var scroll = _doc.createElement('script'),
-                        animateScript = _doc.createElement('script'),
-                        parallaxScript = _doc.createElement('script'),
-                        //css
-                        parallaxCSS = _doc.createElement('link');
-
-                scroll.src = 'js/jquery.scrollTo.min.js';
-                parallaxScript.src = 'jquery.parallax-skeleton.js';
-                animateScript.src = 'js/jquery.animate-enhanced.min.js';
-
-                parallaxCSS.rel = 'stylesheet';
-                parallaxCSS.href = 'parallax-skeleton.css';
-
-                _doc.head.appendChild(animateScript);
-                _doc.head.appendChild(scroll);
-                _doc.head.appendChild(parallaxScript);
-                _doc.head.appendChild(parallaxCSS);
-            }
-
             $(window).load(function() {
-                $(window).scrollTop(0);
-                
-                $('#content-main').parallax({
-                    parallax: 0.75
-                });
-                
                 $('.scroll-start').click(function() {
-                    $.scrollTo('100%', 8000, {easing: 'easeOutBounce'});
+                    $.scrollTo('100%', 8000);
+                });
+                new Parallax().init({
+                    //properties here
                 });
             });
 
             $(document).ready(function() {
-                loadRessources();
                 setTopArticle();
             });
             $(window).resize(setTopArticle);
@@ -54,7 +30,7 @@
         </script>
     </head>
 
-    <body id="body"> 
+    <body class="body"> 
         <header>
             <h1>Test area</h1>
         </header>
