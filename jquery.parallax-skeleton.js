@@ -37,9 +37,8 @@
             elemHeight = parseInt(elem.data("height")),
             elemWith = parseInt(elem.data("with")),
             elemImage = elem.data("image"),
-            elemOffset = elem.offset().top,
-            containerHeight = elem.data("container-height"),
-            elemContent = elem.data("content");
+            elemOffset = elem.offset().top - _window.scrollTop(),
+            containerHeight = elem.data("container-height");
             
             _imgTransX[index] = 0;
             _imgTransY[index] = -elem.data("posy");            
@@ -80,26 +79,8 @@
                 '-webkit-transform': 'translate3d(' + _imgTransX[index] + 'px, ' + (-(elemOffset) * settings.parallax - _imgPosY) + 'px, 0px)'
             });
 
-            //create a content-container for each parallax-container
-            if(elemContent !== ""){
-                var parallaxContent = $(_doc.createElement("div"));
-                parallaxContent.addClass("parallax-content");
-                parallaxContent.css({
-                    width: '100%',
-                    height: '100%',
-                    'transform': 'translate3d(0px, 0px, 0px)',
-                    '-webkit-transform': 'translate3d(0px, 0px, 0px)'
-                });
-                
-                var contentText = $(_doc.createElement("h1"));
-                contentText.text(elemContent);
-                
-                parallaxContent.append(contentText);
-            }
-
             //append those container tho its parents
             parallaxContainer.append(parallaxImage);
-            parallaxContainer.append(parallaxContent);
             parallaxParent.append(parallaxContainer);
         });
 
@@ -130,6 +111,13 @@
                     'height': elemHeight,
                     'transform': 'translate3d(' + _imgTransX[index] + 'px, ' + _imgTransY[index] + 'px, 0px)',
                     '-webkit-transform': 'translate3d(' + _imgTransX[index] + 'px, ' + _imgTransY[index] + 'px, 0px)'
+                });
+            });
+            
+            _parallaxContainer.each(function(index, obj) {
+                var elem = $(obj); 
+                elem.css({
+                    height: $(_parallax[index]).data("container-height")
                 });
             });
         });
