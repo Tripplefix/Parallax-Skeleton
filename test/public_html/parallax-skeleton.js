@@ -1,8 +1,8 @@
 /* 
- * parallax-skeleton - Parallax-scrolling on a new level w/o jquery
+ * parallax-skeleton - Parallax-scrolling on a new level w/o jquery (works currently with Google Chrome only)
  * Copyright (c) 2014 Rolf Isler
  * Licensed under MIT.
- * Date: 27.01.2014
+ * Date: 14.03.2014
  * @author Rolf Isler
  * @version 0.1.0
  * 
@@ -40,10 +40,18 @@ var Parallax = function() {
 
     var ParallaxContainer = function(parent) {
         return {
+            imagePosY: 0,
             imageTransX: 0,
             imageTransY: 0,
             cont: null,
             image: null,
+            translate: function (obj, x, y){
+                this.transform = this.transform || (document.body.style.transform !== undefined ? true : false);
+                if (this.transform)
+                    obj.style.transform = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
+                else
+                    obj.style.webkitTransform = 'translate3d(' + x + 'px, ' + y + 'px, 0px)';
+            },
             finish: function() {
                 //append those container tho its parents
                 this.cont.appendChild(this.image);
@@ -51,9 +59,12 @@ var Parallax = function() {
             }
         };
     };
+    
+    
 
     // start of main code 
     function init() {
+        
         // check if the first argument is an object
         var a = arguments;
         if (isObj(a[ 0 ])) {
@@ -65,15 +76,11 @@ var Parallax = function() {
             }
         }
 
-        //image settings
-        var //_imgTransX = [],
-                //_imgTransY = [],
-                _imgPosY = 0,
-                _parallax = document.getElementsByClassName(config.placeHolderName),
+        //settings
+        var _parallax = document.getElementsByClassName(config.placeHolderName),
                 _body = document.body,
-                _winWith = window.innerWidth,
-                _winHeight = window.innerHeight,
-                _transform = _body.style.transform !== undefined ? true : false,
+                _winWith = parseInt(window.innerWidth),
+                _winHeight = parseInt(window.innerHeight),
                 _containerList = new Array();
 
         //create parent element for the parallax-container                
@@ -81,18 +88,25 @@ var Parallax = function() {
         parallaxParent.classList.add(config.parentName);
         _body.insertBefore(parallaxParent, _body.firstChild);
 
+        //loop through all placeholders and create for each a new parallax container
         Array.prototype.forEach.call(_parallax, function(elem, index) {
-            var elemHeight = elem.dataset.height,
-                    elemWith = elem.dataset.with,
+            
+            //get placeholder properties
+            var elemHeight = parseInt(elem.dataset.height),
+                    elemWith = parseInt(elem.dataset.with),
                     elemImage = elem.dataset.image,
-                    elemOffset = elem.offsetTop,
+                    elemOffset = elem.offsetTop - document.body.scrollTop,    
                     containerHeight = elem.dataset.containerHeight;
+                    console.log(elem.offsetTop - document.body.scrollTop);
+                    
 
             //set placeholder properties
             elem.style.height = containerHeight + "px";
             elem.style.width = '100%';
 
             var pc = new ParallaxContainer(parallaxParent);
+            
+            pc.imagePosY = elem.dataset.posy ? elem.dataset.posy : 0;
 
             if (_winWith >= elemWith) {
                 pc.imageTransX = 0;
@@ -107,11 +121,8 @@ var Parallax = function() {
             pc.cont.classList.add("parallax-container");
             pc.cont.style.visibility = 'visible';
             pc.cont.style.height = containerHeight + "px";
-            if (_transform)
-                pc.cont.style.transform = 'translate3d(0px, ' + elemOffset + 'px, 0px)';
-            else
-                pc.cont.style.webkitTransform = 'translate3d(0px, ' + elemOffset + 'px, 0px)';
-
+            
+            pc.translate(pc.cont, 0, elemOffset);
 
             //create a image-container for each parallax-container
             pc.image = document.createElement("div");
@@ -119,28 +130,26 @@ var Parallax = function() {
             pc.image.style.backgroundImage = "url('" + elemImage + "')";
             pc.image.style.width = elemWith + "px";
             pc.image.style.height = elemHeight + "px";
-            if (_transform)
-                pc.image.style.transform = 'translate3d(' + pc.imageTransX + 'px, ' + (-(elemOffset) * config.parallax - _imgPosY) + 'px, 0px)';
-            else
-                pc.image.style.webkitTransform = 'translate3d(' + pc.imageTransX + 'px, ' + (-(elemOffset) * config.parallax - _imgPosY) + 'px, 0px)';
+            
+            pc.translate(pc.image, pc.imageTransX, (-(elemOffset) * config.parallax - pc.imagePosY));
 
             pc.finish();
             _containerList.push(pc);
         });
 
-        var //_parallaxContainer = document.getElementsByClassName('parallax-container'),
-                _parallaxImage = document.getElementsByClassName('parallax-image');
+        var _parallaxImage = document.getElementsByClassName('parallax-image');
 
         //set image position on resize
         window.addEventListener("resize", function() {
+            
             //update window-variables
-            _winWith = window.innerWidth;
-            _winHeight = window.innerHeight;
+            _winWith = parseInt(window.innerWidth);
+            _winHeight = parseInt(window.innerHeight);
 
             Array.prototype.forEach.call(_parallaxImage, function(elem, index) {
-                var elemWith = _parallax[index].dataset.with,
-                        elemHeight = _parallax[index].dataset.height,
-                        cont = _containerList[index];
+                var elemWith = parseInt(_parallax[index].dataset.with),
+                    elemHeight = parseInt(_parallax[index].dataset.height),
+                    cont = _containerList[index];
 
                 if (_winWith >= elemWith) {
                     cont.imageTransX = 0;
@@ -151,25 +160,20 @@ var Parallax = function() {
                 }
                 elem.style.width = elemWith + "px";
                 elem.style.height = elemHeight + "px";
-                if (_transform)
-                    elem.style.transform = 'translate3d(' + cont.imageTransX + 'px, ' + cont.imageTransY + 'px, 0px)';
-                else
-                    elem.style.webkitTransform = 'translate3d(' + cont.imageTransX + 'px, ' + cont.imageTransY + 'px, 0px)';
+                
+                cont.translate(elem, cont.imageTransX, cont.imageTransY);
             });
         });
 
         //bind on scroll event to window
         window.addEventListener("scroll", function() {
             var scrollTop = document.body.scrollTop,
-                    contTop = _winHeight + scrollTop;
+                contTop = _winHeight + scrollTop;
 
             //reset all css-properties
             for (var i = 0, max = _containerList.length; i < max; i++) {
-                _containerList[i].cont.style.visibility = 'hidden';
-                if (_transform)
-                    _containerList[i].cont.style.transform = 'translate3d(0px, 0px, 0px)';
-                else
-                    _containerList[i].cont.style.webkitTransform = 'translate3d(0px, 0px, 0px)';
+                _containerList[i].cont.style.visibility = 'hidden';                
+                _containerList[i].translate(_containerList[i].cont, 0, 0);
             }
 
             //loop through each parallax object on the document
@@ -183,29 +187,22 @@ var Parallax = function() {
 
                 //if container-top(offset.top) reaches the bottom of the window(winHeight + scrollTop) while scrolling ... 1*
                 if ((contTop) >= offset) {
+                    
                     //but, if container-bottom(settings.containerHeight) reaches top of the window(scrollTop - offset.top)  while scrolling ... 2*
                     if ((scrollTop - offset) >= containerHeight) {
+                        
                         // 2* ... hide the container ...
                         position = 0;
                         visibility = 'hidden';
                     }
 
                     // 1* ... set the container visible and set it to the position of its placeholder ...
-                    obj.cont.style.visibility = visibility;
-                    if (_transform)
-                        obj.cont.style.transform = 'translate3d(0px, ' + position + 'px, 0px)';
-                    else
-                        obj.cont.style.webkitTransform = 'translate3d(0px, ' + position + 'px, 0px)';
-
+                    obj.cont.style.visibility = visibility;                    
+                    obj.translate(obj.cont, 0, position);
 
                     // ... set the parallax-image visible and translate it a bit slower as its container
-                    obj.imageTransY = (-(position) * config.parallax - _imgPosY);
-                    //translateImage($(cont.children().first()), _imgTransX[index], _imgTransY[index]);
-
-                    if (_transform)
-                        obj.cont.children[0].style.transform = 'translate3d(' + obj.imageTransX + 'px, ' + obj.imageTransY + 'px, 0px)';
-                    else
-                        obj.cont.children[0].style.webkitTransform = 'translate3d(' + obj.imageTransX + 'px, ' + obj.imageTransY + 'px, 0px)';
+                    obj.imageTransY = (-(position) * config.parallax - obj.imagePosY);
+                    obj.translate(obj.cont.children[0], obj.imageTransX, obj.imageTransY);
                 }
             });
         });
